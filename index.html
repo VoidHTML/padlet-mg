@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon Portfolio - Analyses Ergonomiques</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0a0a0f;
+            --bg-card: #12121a;
+            --accent: #6366f1;
+            --accent-glow: #818cf8;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --border: #1e1e2e;
+            --gradient-1: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #d946ef 100%);
+            --gradient-2: linear-gradient(135deg, #0ea5e9 0%, #6366f1 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Background effects */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(ellipse 80% 50% at 20% 40%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse 60% 40% at 80% 60%, rgba(139, 92, 246, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 1.5rem 3rem;
+            background: rgba(10, 10, 15, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Syne', sans-serif;
+            font-weight: 800;
+            font-size: 1.5rem;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-primary);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient-1);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section - Présentation */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8rem 3rem 4rem;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 900px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+        }
+
+        .hero h1 span {
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Media Container */
+        .media-container {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-top: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .media-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--gradient-1);
+        }
+
+        /* Section Title */
+        .section-title {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .section-title span {
+            background: var(--gradient-2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-secondary);
+            margin-bottom: 4rem;
+            font-size: 1.1rem;
+        }
+
+        /* Analyses Section */
+        .analyses-section {
+            padding: 6rem 3rem;
+        }
+
+        .analyses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Analysis Card */
+        .analysis-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        .analysis-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(99, 102, 241, 0.5);
+            box-shadow: 0 20px 60px -20px rgba(99, 102, 241, 0.3);
+        }
+
+        .card-number {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            font-family: 'Syne', sans-serif;
+            font-size: 4rem;
+            font-weight: 800;
+            opacity: 0.08;
+            line-height: 1;
+        }
+
+        .card-header {
+            padding: 2rem 2rem 1rem;
+            position: relative;
+        }
+
+        .card-header h3 {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-header p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .site-url {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--accent-glow);
+            font-size: 0.85rem;
+            margin-top: 0.75rem;
+            padding: 0.4rem 0.8rem;
+            background: rgba(99, 102, 241, 0.1);
+            border-radius: 20px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .site-url:hover {
+            background: rgba(99, 102, 241, 0.2);
+        }
+
+        .card-body {
+            padding: 0 2rem 2rem;
+        }
+
+        /* Tags */
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .tag {
+            padding: 0.35rem 0.75rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 3rem;
+            border-top: 1px solid var(--border);
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        footer a {
+            color: var(--accent-glow);
+            text-decoration: none;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-content {
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .analysis-card {
+            animation: fadeInUp 0.6s ease-out backwards;
+        }
+
+        .analysis-card:nth-child(1) { animation-delay: 0.1s; }
+        .analysis-card:nth-child(2) { animation-delay: 0.2s; }
+        .analysis-card:nth-child(3) { animation-delay: 0.3s; }
+        .analysis-card:nth-child(4) { animation-delay: 0.4s; }
+        .analysis-card:nth-child(5) { animation-delay: 0.5s; }
+        .analysis-card:nth-child(6) { animation-delay: 0.6s; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav {
+                padding: 1rem 1.5rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero, .analyses-section {
+                padding: 6rem 1.5rem 3rem;
+            }
+
+            .analyses-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .media-container {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="logo">Padlet</div>
+        <ul class="nav-links">
+            <li><a href="#presentation">Prisentacion</a></li>
+            <li><a href="#analyses">Analisi</a></li>
+        </ul>
+    </nav>
+
+    <!-- Section Présentation -->
+    <section id="presentation" class="hero">
+        <div class="hero-content">
+            <h1>Bonghjornu, mi chjamu <span>Manoël GARCIA</span></h1>
+            <p class="hero-subtitle">
+                Scuprite u mo percorsu è l'analisi ergonomiche di i siti web, cù pruposte concrete per u miglioramentu
+            </p>
+
+            <div class="media-container">
+                <audio controls style="width: 100%;">
+                   <source src="audio/CASATA_Prisentazione persunale.m4a" type="audio/mpeg">
+                </audio>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Analyses Ergonomiques -->
+    <section id="analyses" class="analyses-section">
+        <h2 class="section-title">Analisi <span>Ergonomia</span></h2>
+        <p class="section-subtitle">6 studii di situ web cù identificazione di punti di forza, debulezze è aree di miglioramentu</p>
+
+        <div class="analyses-grid">
+            
+            <!-- Analyse 1 - SC Bastia -->
+            <article class="analysis-card">
+                <span class="card-number">01</span>
+                <div class="card-header">
+                    <h3>SC Bastia</h3>
+                    <p>Breve descrizzione di u situ analizatu</p>
+                    <a href="https://sc-bastia.corsica/" class="site-url">🔗 Visita u situ</a>
+                </div>
+                <div class="card-body">
+                    <audio controls style="width: 100%;">
+                      <source src="audio/CASATA_Vie di megliurazione 1.mp3" type="audio/mpeg">
+                    </audio>
+                    <div class="tags">
+                        <span class="tag">Navigazione</span>
+                        <span class="tag">Cuntrassu</span>
+                        <span class="tag">Caricamentu</span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Analyse 2 - Fiera di a Castagna -->
+            <article class="analysis-card">
+                <span class="card-number">02</span>
+                <div class="card-header">
+                    <h3>Fiera di Acastagna</h3>
+                    <p>Breve descrizzione di u situ analizatu</p>
+                    <a href="https://www.fieradiacastagna.com/" class="site-url">🔗 Visita u situ</a>
+                </div>
+                <div class="card-body">
+                    <audio controls style="width: 100%;">
+                      <source src="audio/CASATA_Vie di megliurazione 2.mp3" type="audio/mpeg">
+                    </audio>
+                    <div class="tags">
+                        <span class="tag">Interfaccia</span>
+                        <span class="tag">Buttoni</span>
+                        <span class="tag">Ricerca</span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Analyse 3 - Fiera di u Casgu -->
+            <article class="analysis-card">
+                <span class="card-number">03</span>
+                <div class="card-header">
+                    <h3>Fiera di u casgiu</h3>
+                    <p>Breve descrizzione di u situ analizatu</p>
+                    <a href="https://www.fromages-corse.org/" class="site-url">🔗 Visita u situ</a>
+                </div>
+                <div class="card-body">
+                    <audio controls style="width: 100%;">
+                      <source src="audio/CASATA_Vie di megliurazione 3.mp3" type="audio/mpeg">
+                    </audio>
+                    <div class="tags">
+                        <span class="tag">Furmulari</span>
+                        <span class="tag">Filu d'Arianna</span>
+                        <span class="tag">Mobile</span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Analyse 4 - AC Ajaccio -->
+            <article class="analysis-card">
+                <span class="card-number">04</span>
+                <div class="card-header">
+                    <h3>AC Ajaccio</h3>
+                    <p>Breve descrizzione di u situ analizatu</p>
+                    <a href="https://ac-ajaccio.corsica/" class="site-url">🔗 Visita u situ</a>
+                </div>
+                <div class="card-body">
+                    <audio controls style="width: 100%;">
+                      <source src="audio/CASATA_Vie di megliurazione 4.mp3" type="audio/mpeg">
+                    </audio>
+                    <div class="tags">
+                        <span class="tag">Iconi</span>
+                        <span class="tag">Accessibilità</span>
+                        <span class="tag">Organizazione</span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Analyse 5 - Universita -->
+            <article class="analysis-card">
+                <span class="card-number">05</span>
+                <div class="card-header">
+                    <h3>Universita de Pascale Paoli</h3>
+                    <p>Breve descrizzione di u situ analizatu</p>
+                    <a href="https://studia.universita.corsica/" class="site-url">🔗 Visita u situ</a>
+                </div>
+                <div class="card-body">
+                    <audio controls style="width: 100%;">
+                     <source src="audio/CASATA_Vie di megliurazione 5.mp3" type="audio/mpeg">
+                    </audio>
+                    <div class="tags">
+                        <span class="tag">Disegnu</span>
+                        <span class="tag">Feedback</span>
+                        <span class="tag">Cuntenutu</span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Analyse 6 - A Casa Corsa -->
+            <article class="analysis-card">
+                <span class="card-number">06</span>
+                <div class="card-header">
+                    <h3>A Casa Corsa</h3>
+                    <p>Breve descrizzione di u situ analizatu</p>
+                    <a href="https://acasacorsa-piana.com/" class="site-url">🔗 Visita u situ</a>
+                </div>
+                <div class="card-body">
+                    <audio controls style="width: 100%;">
+                     <source src="audio/CASATA_Vie di megliurazione 6.mp3" type="audio/mpeg">
+                    </audio>
+                    <div class="tags">
+                        <span class="tag">Cuirenza</span>
+                        <span class="tag">Imagini</span>
+                        <span class="tag">Accattu</span>
+                    </div>
+                </div>
+            </article>
+
+        </div>
+    </section>
+
+    <footer>
+        <p>Portfolio réalisé dans le cadre de ma formation • <a href="#">Contact</a></p>
+    </footer>
+</body>
+</html>
